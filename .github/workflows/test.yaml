@@ -18,6 +18,7 @@ jobs:
           print(os.environ['PATH'])
           print(sys.version)
         shell: python
+      - run: pip install numpy
       - name: Check numpy
         run: |
           import numpy as np
