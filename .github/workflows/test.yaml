@@ -18,3 +18,8 @@ jobs:
           print(os.environ['PATH'])
           print(sys.version)
         shell: python
+      - name: Check numpy
+        run: |
+          import numpy as np
+          print(np.version.version)
+        shell: python
