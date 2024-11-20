@@ -14,5 +14,7 @@ jobs:
       - name: Display the path
         run: |
           import os
+          import sys
           print(os.environ['PATH'])
+          print(sys.version)
         shell: python
