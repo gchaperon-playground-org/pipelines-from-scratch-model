@@ -12,3 +12,6 @@ runtime-requirements.txt
 
 # Jupyter stuff
 .ipynb_checkpoints/
+
+# Hatch VCS stuff
+_version.py
