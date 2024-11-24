@@ -1,0 +1,14 @@
+# Python stuff
+.venv/
+__pycache__/
+
+# KFP stuff
+component_metadata/
+local_outputs/
+.dockerignore
+Dockerfile
+kfp_config.ini
+runtime-requirements.txt
+
+# Jupyter stuff
+.ipynb_checkpoints/
