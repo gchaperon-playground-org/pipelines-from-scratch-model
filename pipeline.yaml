@@ -36,28 +36,28 @@ deploymentSpec:
     exec-add:
       container:
         args:
-        - --executor_input
-        - '{{$}}'
-        - --function_to_execute
-        - add
+          - --executor_input
+          - '{{$}}'
+          - --function_to_execute
+          - add
         command:
-        - python3
-        - -m
-        - kfp.dsl.executor_main
+          - python3
+          - -m
+          - kfp.dsl.executor_main
         image: us-central1-docker.pkg.dev/pipelines-from-scratch/components/add:0.1.0
         resources:
           resourceCpuLimit: 100m
     exec-add-2:
       container:
         args:
-        - --executor_input
-        - '{{$}}'
-        - --function_to_execute
-        - add
+          - --executor_input
+          - '{{$}}'
+          - --function_to_execute
+          - add
         command:
-        - python3
-        - -m
-        - kfp.dsl.executor_main
+          - python3
+          - -m
+          - kfp.dsl.executor_main
         image: us-central1-docker.pkg.dev/pipelines-from-scratch/components/add:0.1.0
         resources:
           resourceCpuLimit: 100m
@@ -91,7 +91,7 @@ root:
         componentRef:
           name: comp-add-2
         dependentTasks:
-        - add
+          - add
         inputs:
           parameters:
             a:

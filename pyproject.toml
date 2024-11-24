@@ -8,4 +8,7 @@ version = "0.1.0"
 dependencies = ["kfp"]
 
 [project.optional-dependencies]
-dev = ["jupyterlab"]
+# NOTE: ruff version should be kept in sync with the one declared in
+# .pre-commit-config.yaml. Ruff added as dev dependency for developer
+# convinience
+dev = ["jupyterlab", "pre-commit", "ruff==0.8.0"]
