@@ -1,10 +1,10 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [project]
 name = "pipelines-from-scratch"
-version = "0.1.0"
+dynamic = ["version"]
 dependencies = ["kfp"]
 
 [project.optional-dependencies]
@@ -12,3 +12,9 @@ dependencies = ["kfp"]
 # .pre-commit-config.yaml. Ruff added as dev dependency for developer
 # convinience
 dev = ["jupyterlab", "pre-commit", "ruff==0.8.0"]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/pipelines_from_scratch/_version.py"
