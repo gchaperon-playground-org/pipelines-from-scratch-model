@@ -36,6 +36,9 @@ jobs:
   push-components:
     name: Push KFP Components
     runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -60,6 +63,9 @@ jobs:
   push-pipeline:
     name: Push Pipeline Specs
     runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
