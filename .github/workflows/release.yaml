@@ -3,11 +3,15 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    branches:
+      - master
   repository_dispatch:
     types: [semantic-release]
   workflow_dispatch:
 jobs:
   release:
+    if: false # NOTE: temporary! remove before merge
     name: Release
     runs-on: ubuntu-latest
     permissions:
@@ -29,3 +33,60 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release@24
+  push-components:
+    name: Push KFP Components
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: pyproject.toml
+      - uses: google-github-actions/auth@v2
+        with:
+          project_id: pipelines-from-scratch
+          service_account: gha-gchaperon-playground-org@pipelines-from-scratch.iam.gserviceaccount.com
+          workload_identity_provider: projects/251863247499/locations/global/workloadIdentityPools/github/providers/gha-gchaperon-v2
+          token_format: access_token
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: gcr.io
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
+      - name: Install
+        run: pip install -c requirements.txt .
+      - name: Compile and push
+        run: kfp component build --component-filepattern "src/**/*.py" .
+  push-pipeline:
+    name: Push Pipeline Specs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: pyproject.toml
+      - uses: google-github-actions/auth@v2
+        with:
+          project_id: pipelines-from-scratch
+          service_account: gha-gchaperon-playground-org@pipelines-from-scratch.iam.gserviceaccount.com
+          workload_identity_provider: projects/251863247499/locations/global/workloadIdentityPools/github/providers/gha-gchaperon-v2
+      - name: Install
+        run: pip install -c requirements.txt .
+      - name: Compile pipelines
+        shell: python
+        run: kfp dsl compile --py src/pipelines_from_scratch/pipelines.py --output pipeline.yaml
+      - name: Push pipelines
+        shell: python
+        run: |
+          import pipelines_from_scratch
+          from kfp.registry import RegistryClient
+
+          HOST = "https://us-central1-kfp.pkg.dev/pipelines-from-scratch/pipelines"
+          client = RegistryClient(host=HOST)
+
+          template_name, template_version = client.upload_pipeline(
+              file_name="pipeline.yaml",
+              tags=[pipelines_from_scratch.__version__, "latest"],
+          )
+
+          print(f"{template_name}/{template_version}")
