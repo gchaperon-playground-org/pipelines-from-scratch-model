@@ -44,7 +44,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version-file: pyproject.toml
-      - uses: google-github-actions/auth@v2
+      - id: auth
+        uses: google-github-actions/auth@v2
         with:
           project_id: pipelines-from-scratch
           service_account: gha-gchaperon-playground-org@pipelines-from-scratch.iam.gserviceaccount.com
@@ -78,10 +79,10 @@ jobs:
           workload_identity_provider: projects/251863247499/locations/global/workloadIdentityPools/github/providers/gha-gchaperon-v2
       - name: Install
         run: pip install -c requirements.txt .
-      - name: Compile pipelines
+      - name: Compile pipeline
         shell: python
         run: kfp dsl compile --py src/pipelines_from_scratch/pipelines.py --output pipeline.yaml
-      - name: Push pipelines
+      - name: Push pipeline
         shell: python
         run: |
           import pipelines_from_scratch
