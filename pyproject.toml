@@ -5,7 +5,8 @@ build-backend = "hatchling.build"
 [project]
 name = "pipelines-from-scratch"
 dynamic = ["version"]
-dependencies = ["kfp"]
+requires-python = "~=3.10"
+dependencies = ["kfp", "docker"]
 
 [project.optional-dependencies]
 # NOTE: ruff version should be kept in sync with the one declared in

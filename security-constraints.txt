@@ -1,0 +1,2 @@
+# Handles https://github.com/gchaperon-playground-org/pipelines-from-scratch-model/security/dependabot/1
+tornado>=6.4.2
