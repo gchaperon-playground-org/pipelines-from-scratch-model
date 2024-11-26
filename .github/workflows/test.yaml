@@ -1,0 +1,33 @@
+name: test
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test-python:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display the path
+        run: |
+          import os
+          import sys
+          print(os.environ['PATH'])
+          print(sys.version)
+        shell: python
+      - run: pip install numpy
+      - name: Check numpy
+        run: |
+          import numpy as np
+          print(np.version.version)
+        shell: python
+  test-checkout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: git log --graph --oneline --all
