@@ -24,5 +24,7 @@ jobs:
         with:
           path: ~/.cache/pre-commit
           key: pre-commit|${{ env.PY }}|${{ hashFiles('.pre-commit-config.yaml') }}
-      - name: Run linters
+      - name: Run pre-commit hooks
         run: pre-commit run --all-files --hook-stage pre-commit
+      - name: Run pre-push hooks
+        run: pre-commit run --all-files --hook-stage pre-push
