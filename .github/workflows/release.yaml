@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    branches:
+      - master
   repository_dispatch:
     types: [semantic-release]
   workflow_dispatch:
