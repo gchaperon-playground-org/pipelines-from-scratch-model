@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
 jobs:
   release:
+    if: false
     name: Release
     runs-on: ubuntu-latest
     permissions:
@@ -31,13 +32,17 @@ jobs:
         run: npx semantic-release@24
   push-components:
     name: Push KFP Components
-    needs: release
+    # needs: release
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'
       id-token: 'write'
     steps:
       - uses: actions/checkout@v4
+        with:
+          # NOTE: our versioning scheme depends on git tags, so it's kinda
+          # important to fetch tags here
+          fetch-tags: true
       - uses: actions/setup-python@v5
         with:
           python-version-file: pyproject.toml
@@ -68,13 +73,15 @@ jobs:
             gs://pipelines-from-scratch-kfp-component-metadata-ea624a34/$(pipx run hatch version)/
   push-pipeline:
     name: Push Pipeline Specs
-    needs: release
+    # needs: release
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'
       id-token: 'write'
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-tags: true
       - uses: actions/setup-python@v5
         with:
           python-version-file: pyproject.toml
