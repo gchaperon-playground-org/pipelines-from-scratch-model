@@ -1,6 +1,6 @@
 import kfp.dsl
 
-import pipelines_from_scratch.components as components
+from pipelines_from_scratch import components
 
 
 @kfp.dsl.pipeline
