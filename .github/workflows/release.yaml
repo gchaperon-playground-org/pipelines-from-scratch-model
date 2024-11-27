@@ -38,6 +38,11 @@ jobs:
       id-token: 'write'
     steps:
       - uses: actions/checkout@v4
+        with:
+          # NOTE: our versioning scheme depends on git tags, so it's kinda
+          # important to fetch tags here
+          fetch-tags: true
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version-file: pyproject.toml
@@ -75,6 +80,9 @@ jobs:
       id-token: 'write'
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-tags: true
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version-file: pyproject.toml
