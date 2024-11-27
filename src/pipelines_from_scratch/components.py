@@ -15,7 +15,7 @@ DOCKER_TAG = pipelines_from_scratch.__version__.replace("+", "-")
 
 
 @kfp.dsl.component(
-    base_image="python:3.10",
+    base_image="python:3.10-slim",
     target_image=f"{DOCKER_REGISTRY}/{COMPONENTS_REPO}/add:{DOCKER_TAG}",
 )
 def add(a: int, b: int) -> int:
