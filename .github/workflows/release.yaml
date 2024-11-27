@@ -3,15 +3,11 @@ on:
   push:
     branches:
       - master
-  pull_request:
-    branches:
-      - master
   repository_dispatch:
     types: [semantic-release]
   workflow_dispatch:
 jobs:
   release:
-    if: false # NOTE: temporary! remove before merge
     name: Release
     runs-on: ubuntu-latest
     permissions:
@@ -35,6 +31,7 @@ jobs:
         run: npx semantic-release@24
   push-components:
     name: Push KFP Components
+    needs: release
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'
@@ -71,6 +68,7 @@ jobs:
             gs://pipelines-from-scratch-kfp-component-metadata-ea624a34/$(pipx run hatch version)/
   push-pipeline:
     name: Push Pipeline Specs
+    needs: release
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'
