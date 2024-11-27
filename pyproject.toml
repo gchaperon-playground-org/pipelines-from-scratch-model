@@ -17,8 +17,5 @@ dev = ["jupyterlab", "pre-commit", "ruff==0.8.0"]
 [tool.hatch.version]
 source = "vcs"
 
-[tool.hatch.build.hooks.vcs]
-version-file = "src/pipelines_from_scratch/_version.py"
-
 [tool.hatch.version.raw-options]
 local_scheme = "node-and-timestamp"
