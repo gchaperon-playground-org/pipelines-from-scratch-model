@@ -5,13 +5,10 @@ __pycache__/
 # KFP stuff
 component_metadata/
 local_outputs/
-.dockerignore
-Dockerfile
 kfp_config.ini
+# NOTE: we ignore runtime-requirements.txt because we handle dependencies
+# ourselves via requirements.txt
 runtime-requirements.txt
 
 # Jupyter stuff
 .ipynb_checkpoints/
-
-# Hatch VCS stuff
-_version.py
